@@ -4,11 +4,11 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 export default Pagination = props => {
     return(
         <View style={styles.paginationContainer}>
-            <TouchableOpacity>
-                <Text style={styles.buttonText}>Back</Text>
+            <TouchableOpacity onPress={() => props.onPageChange('back')}>
+                {props.currentPage !== 1 && <Text style={styles.buttonText}>Back</Text>}
             </TouchableOpacity>
-            <TouchableOpacity>
-                <Text style={styles.buttonText}>Next</Text>
+            <TouchableOpacity onPress={() => props.onPageChange('next')}>
+                {props.max !== props.currentPage && <Text style={styles.buttonText}>Next</Text>}
             </TouchableOpacity>
         </View>
     )

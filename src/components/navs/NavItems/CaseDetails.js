@@ -9,7 +9,7 @@ export default class CaseDetails extends React.Component{
                 <View style={styles.fieldContainer}>
                     <View style={styles.fieldHeader}>
                         <Text style={styles.fieldTitle}>Applicants</Text>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddApplicant')} style={styles.addWrapper}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddApplicant', {currentPage: 1})} style={styles.addWrapper}>
                             <Icon name="plus" size={20} color="#8579fd"/>
                             <Text style={styles.addTitle}>Add</Text>
                         </TouchableOpacity>
@@ -20,7 +20,7 @@ export default class CaseDetails extends React.Component{
                 <View style={styles.fieldContainer}>
                     <View style={styles.fieldHeader}>
                         <Text style={styles.fieldTitle}>Addresses</Text>
-                        <TouchableOpacity style={styles.addWrapper}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddApplicant', {currentPage: 3})} style={styles.addWrapper}>
                             <Icon name="plus" size={20} color="#8579fd"/>
                             <Text style={styles.addTitle}>Add Operating Address</Text>
                         </TouchableOpacity>
@@ -31,7 +31,7 @@ export default class CaseDetails extends React.Component{
                 <View style={styles.fieldContainer}>
                     <View style={styles.fieldHeader}>
                         <Text style={styles.fieldTitle}>Bank Accounts</Text>
-                        <TouchableOpacity style={styles.addWrapper}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AddApplicant', {currentPage: 4})} style={styles.addWrapper}>
                             <Icon name="plus" size={20} color="#8579fd"/>
                             <Text style={styles.addTitle}>Add Account</Text>
                         </TouchableOpacity>

@@ -6,7 +6,7 @@ export default HeaderWithBackButton = props => {
     return(
         <View style={styles.headerContainer}>
             <View style={styles.titleBack}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate('Enterprise')}>
                     <Icon name="arrow-left" size={24} color='black' />
                 </TouchableOpacity>
                 <Text style={styles.headerText}>
