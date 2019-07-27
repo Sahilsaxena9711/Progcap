@@ -13,7 +13,7 @@ export default HeaderWithBackButton = props => {
                     {props.headerTitle}
                 </Text>
             </View>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate('AddDocument')}>
                 <Text style={styles.subTitle}>{props.subTitle}</Text>
             </TouchableOpacity>
         </View>

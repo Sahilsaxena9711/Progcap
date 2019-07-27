@@ -17,7 +17,7 @@ export default Pagination = props => {
 const styles = StyleSheet.create({
     paginationContainer: {
         width: '90%',
-        height: 70,
+        height: 30,
         bottom: 0,
         marginLeft: 20,
         marginRight: 20,

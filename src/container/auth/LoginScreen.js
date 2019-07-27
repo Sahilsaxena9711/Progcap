@@ -7,8 +7,8 @@ export default class LoginScreen extends React.Component{
             <View style={styles.container}>
                 <View style={styles.formContainer}>
                     <Text style={styles.title}>Login</Text>
-                    <TextInput style={styles.input} placeholder="username"/>
-                    <TextInput style={styles.input} placeholder="password"/>
+                    <TextInput returnKeyType='next' style={styles.input} placeholder="username"/>
+                    <TextInput returnKeyType='done' style={styles.input} placeholder="password"/>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Enterprise')} style={styles.button}>
                         <Text style={styles.buttonText}>
                             LOGIN

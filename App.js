@@ -5,16 +5,18 @@ import {StatusBar} from 'react-native';
 import LoginScreen from './src/container/auth/LoginScreen';
 import EnterpriseScreen from './src/container/app/EnterpriseScreen';
 import AddApplicantScreen from './src/container/app/AddApplicantScreen';
+import AddDocument from './src/components/addDocument/AddDocument';
 
 const AuthStack = createStackNavigator({
   Login: LoginScreen,
 },{
-  headerMode: 'none'
+  headerMode: 'none',
 });
 
 const AppStack = createStackNavigator({
   Enterprise: EnterpriseScreen,
-  AddApplicant: AddApplicantScreen
+  AddApplicant: AddApplicantScreen,
+  AddDocument: AddDocument
 },{
   headerMode: 'none'
 })
@@ -27,9 +29,9 @@ const Routes = createAppContainer(createSwitchNavigator({
 export default App = () => {
   return (
     <React.Fragment>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={{flex: 1}}>
-          <Routes/>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+        <Routes/>
       </SafeAreaView>
     </React.Fragment>
   )
