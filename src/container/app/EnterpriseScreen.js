@@ -7,7 +7,12 @@ import Documents from '../../components/navs/NavItems/Documents';
 
 export default class EnterpriseScreen extends React.Component{
     state = {
-        activeNav: 'caseDetails'
+        activeNav: 'caseDetails',
+        navItems: [
+            {routeName: 'caseDetails', displayName: 'Case Details'},
+            {routeName: 'documents', displayName: 'Documents'},
+            {routeName: 'notes', displayName: 'Notes'}
+        ]
     }
 
     changeNav = (name) => {
@@ -17,13 +22,13 @@ export default class EnterpriseScreen extends React.Component{
     }
 
     render(){
-        const { activeNav } = this.state;
+        const { activeNav, navItems } = this.state;
         return(
             <View style={styles.container}>
-                <HeaderWithClose navigation={this.props.navigation} />
+                <HeaderWithClose title="SHREE BALAJI ENTERPRISES" navigation={this.props.navigation} />
                 <ScrollView stickyHeaderIndices={[1]}>
                     <View style={styles.gutterSpace}/>
-                    <NavBar changeNav={this.changeNav} activeNav={activeNav} />
+                    <NavBar changeNav={this.changeNav} navItems={navItems} activeNav={activeNav}  />
                      {activeNav === 'caseDetails' && <CaseDetails navigation={this.props.navigation} />}
                     {activeNav === 'documents' && <Documents />}
                      {/* {activeNav === 'notes' && <Notes />} */}

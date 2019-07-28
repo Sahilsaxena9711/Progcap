@@ -2,18 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default HeaderWithClose = (props) => {
+export default HeaderWithClose = React.memo(props => {
     return(
         <View style={styles.headerContainer}>
             <Text style={styles.headerText}>
-                SHREE BALAJI ENTERPRISES
+                {props.title}
             </Text>
             <TouchableOpacity onPress={() => props.navigation.goBack()}>
                 <Icon name="close" size={30} color='black' />
             </TouchableOpacity>
         </View>
     )
-}
+})
 
 const styles = StyleSheet.create({
     headerContainer:{

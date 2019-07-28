@@ -1,21 +1,17 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Platform} from 'react-native';
 
-export default NavBar = props => {
+export default NavBar = React.memo(props => {
     return(
         <View style={styles.navContainer}>
-            <TouchableOpacity onPress={() => props.changeNav('caseDetails')} style={[styles.navItem, props.activeNav === 'caseDetails' ? styles.activeNavItem : null]}>
-                <Text style={[styles.navText, props.activeNav === 'caseDetails' ? styles.activeNavText : null]}>Case Details</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.changeNav('documents')} style={[styles.navItem, props.activeNav === 'documents' ? styles.activeNavItem : null]}>
-                <Text style={[styles.navText, props.activeNav === 'documents' ? styles.activeNavText : null]}>Documents</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.changeNav('notes')} style={[styles.navItem, props.activeNav === 'notes' ? styles.activeNavItem : null]}>
-                <Text style={[styles.navText, props.activeNav === 'notes' ? styles.activeNavText : null]}>Notes</Text>
-            </TouchableOpacity>
+            {props.navItems.map((item, key) => (
+                <TouchableOpacity key={key} onPress={() => props.changeNav(item.routeName)} style={[styles.navItem, props.activeNav === item.routeName ? styles.activeNavItem : null]}>
+                    <Text style={[styles.navText, props.activeNav === item.routeName ? styles.activeNavText : null]}>{item.displayName}</Text>
+                </TouchableOpacity>
+            ))}
         </View>
     )
-}
+})
 
 const styles = StyleSheet.create({
     navContainer: {

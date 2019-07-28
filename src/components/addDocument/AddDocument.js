@@ -1,9 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, Modal, Alert, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image, Platform } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import ActionSheet from 'react-native-actionsheet'
 import HeaderWithBackButton from '../headers/HeaderWithBackButton';
-import { SafeAreaView } from 'react-navigation';
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 
 export default class AddDocument extends React.Component {
@@ -26,18 +25,19 @@ export default class AddDocument extends React.Component {
                     height: 250,
                     cropping: true,
                 }).then(image => {
-                    console.log(image);
-                    if(Platform.OS === 'android'){
+                    if (Platform.OS === 'android') {
                         this.setState({
                             imagePath: image.path
                         })
-                    }else{
+                    } else {
                         this.setState({
                             imagePath: image.sourceURL
                         })
                     }
+                    this.upload();
                 }).catch((e) => {
-                    console.log(e)
+                    console.log(e);
+                    this.props.navigation.goBack()
                 });
                 break;
             case 1:
@@ -46,21 +46,23 @@ export default class AddDocument extends React.Component {
                     height: 250,
                     cropping: true,
                 }).then(image => {
-                    console.log(image);
-                    if(Platform.OS === 'android'){
+                    if (Platform.OS === 'android') {
                         this.setState({
                             imagePath: image.path
                         })
-                    }else{
+                    } else {
                         this.setState({
                             imagePath: image.sourceURL
                         })
                     }
+                    this.upload();
                 }).catch((e) => {
-                    console.log(e)
+                    console.log(e);
+                    this.props.navigation.goBack()
                 });
                 break;
             default:
+                this.props.navigation.goBack()
                 break;
         }
     }
@@ -70,72 +72,51 @@ export default class AddDocument extends React.Component {
             upload: true
         });
         const uploadInterval = setInterval(() => {
-            if(this.state.progress > 100){
+            if (this.state.progress > 100) {
                 clearInterval(uploadInterval);
-            }else{
+            } else {
                 this.setState({
-                    progress: this.state.progress + 10
+                    progress: this.state.progress + 25
                 })
             }
         }, 1000)
     }
 
     render() {
-        const { imagePath, upload, progress, success } = this.state;
+        const { imagePath, progress } = this.state;
         return (
             <View style={{ flex: 1 }}>
                 <HeaderWithBackButton navigation={this.props.navigation} headerTitle="PAN Card" />
-                {imagePath !== '' ? <View style={styles.container}>
-                    <Text style={styles.titleText}>Preview</Text>
-                    <Image
-                        source={{ uri: imagePath }}
-                        style={styles.imageContainer}
-                    />
-                    <View style={styles.optionsContainer}>
-                        <TouchableOpacity onPress={() => this.ActionSheet.show()} style={styles.button}>
-                            <Text style={styles.buttonText}>Retry</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.upload} style={styles.button}>
-                            <Text style={styles.buttonText}>Upload</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> : 
-                success ? <View>
-                    <Text>Success!!</Text>
-                </View>
-                    : null}
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={upload}
-                    onRequestClose={() => { this.setState({upload: false, progress: 0, success: false})}}>
-                    <SafeAreaView style={{ flex: 1 }}>
-                        {progress > 100 ? <View style={styles.detailContainer}>
-                            <Text style={styles.detailsText}>Name: XXXX XXXXX XXXXX</Text>
-                            <Text style={styles.detailsText}>DOB: XX-XX-XXXXX</Text>
-                            <Text style={styles.detailsText}>PAN: XXXXXXXXXXXXXX</Text>
-                            <View style={styles.detailActions}>
-                                <TouchableOpacity onPress={() => this.setState({progress: 0, upload: false, imagePath: '', success: true })} style={styles.detailsButtonAccept}>
-                                    <Text style={styles.detailsButtonAcceptText}>Accept</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.setState({upload: false, progress: 0, success: false})} style={styles.detailsButton}>
-                                    <Text style={styles.detailsCancel}>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
+                {imagePath !== '' ? <View style={{ flex: 1 }}>
+                    {progress > 100 ? <View style={styles.detailContainer}>
+                        <Image
+                            source={{ uri: imagePath }}
+                            style={styles.imageContainer}
+                        />
+                        <Text style={styles.detailsText}>Name: XXXX XXXXX XXXXX</Text>
+                        <Text style={styles.detailsText}>DOB: XX-XX-XXXXX</Text>
+                        <Text style={styles.detailsText}>PAN: XXXXXXXXXXXXXX</Text>
+                        <View style={styles.detailActions}>
+                            <TouchableOpacity onPress={() => this.setState({ progress: 0, upload: false, imagePath: '', success: true }, () => this.props.navigation.goBack())} style={styles.detailsButtonAccept}>
+                                <Text style={styles.detailsButtonAcceptText}>Accept</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ upload: false, progress: 0, success: false }, () => this.props.navigation.goBack())} style={styles.detailsButton}>
+                                <Text style={styles.detailsCancel}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
-                            : <View style={styles.modalContainer}>
+                    </View>
+                        : <View style={styles.modalContainer}>
                             <Text style={styles.modalText}>Processing Image for Text Extraction</Text>
                             <ProgressBarAnimated
                                 width={250}
                                 value={progress}
                                 backgroundColorOnComplete="#6CC644"
                             />
-                            <TouchableOpacity onPress={() => this.setState({upload: false, progress: 0, success: false})} style={styles.modalButton}>
+                            <TouchableOpacity onPress={() => this.setState({ upload: false, progress: 0, success: false }, () => this.props.navigation.goBack())} style={styles.modalButton}>
                                 <Text style={styles.modalButtonText}>Cancel</Text>
                             </TouchableOpacity>
                         </View>}
-                    </SafeAreaView>
-                </Modal>
+                </View> : null}
                 <ActionSheet
                     ref={o => this.ActionSheet = o}
                     title={'Select Image from?'}
@@ -159,7 +140,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        marginTop: 30,
+        marginBottom: 30,
         height: 200,
         borderColor: 'lightgray',
         borderRadius: 0.5
@@ -217,8 +198,8 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         flex: 1,
-        width: Dimensions.get('window').width*60/100,
-        marginLeft: Dimensions.get('window').width*20/100
+        width: Dimensions.get('window').width * 60 / 100,
+        marginLeft: Dimensions.get('window').width * 20 / 100
     },
     detailsText: {
         marginLeft: 0,
@@ -234,7 +215,7 @@ const styles = StyleSheet.create({
     detailsButtonAccept: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: Dimensions.get('window').width*30/100,
+        width: Dimensions.get('window').width * 30 / 100,
         padding: 5,
         borderRadius: 3,
         backgroundColor: '#0091ff',

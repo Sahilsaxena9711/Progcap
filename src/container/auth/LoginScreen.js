@@ -9,7 +9,7 @@ export default class LoginScreen extends React.Component{
                     <Text style={styles.title}>Login</Text>
                     <TextInput returnKeyType='next' style={styles.input} placeholder="username"/>
                     <TextInput returnKeyType='done' style={styles.input} placeholder="password"/>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Enterprise')} style={styles.button}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Cases')} style={styles.button}>
                         <Text style={styles.buttonText}>
                             LOGIN
                         </Text>
